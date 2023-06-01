@@ -59,42 +59,60 @@ const posts = [
 
 const containerEl = document.getElementById("container")
 
-
-function postGenerator (id, content, media, name, image, like, created) {
-    containerEl.innerHTML = `
-    <div class="post">
+function postGenerator (id, content, media, name, image, likes, created) {
+    containerEl.innerHTML += `
+        <div class="post" id="n${id}">
             <div class="post__header">
                 <div class="post-meta">                    
                     <div class="post-meta__icon">
-                        <img class="profile-pic" src="https://unsplash.it/300/300?image=15" alt="Phil Mangione">                    
+                        <img class="profile-pic" src="${image}" alt="${name}">                    
                     </div>
                     <div class="post-meta__data">
-                        <div class="post-meta__author">Phil Mangione</div>
-                        <div class="post-meta__time">4 mesi fa</div>
+                        <div class="post-meta__author">${name}</div>
+                        <div class="post-meta__time">${created}</div>
                     </div>                    
                 </div>
             </div>
-            <div class="post__text">Placeat libero ipsa nobis ipsum quibusdam quas harum ut. Distinctio minima iusto. Ad ad maiores et sint voluptate recusandae architecto. Et nihil ullam aut alias.</div>
+            <div class="post__text">
+                ${content}
+            </div>
             <div class="post__image">
-                <img src="https://unsplash.it/600/300?image=171" alt="">
+                <img src="${media}" alt="">
             </div>
             <div class="post__footer">
                 <div class="likes js-likes">
                     <div class="likes__cta">
-                        <a class="like-button  js-like-button" href="#" data-postid="1">
+                        <a class="like-button js-like-button" href="#n${id}" data-postid="1">
                             <i class="like-button__icon fas fa-thumbs-up" aria-hidden="true"></i>
-                            <span class="like-button__label">Mi Piace</span>
+                            <span class="like-button__label">
+                                Mi Piace
+                            </span>
                         </a>
                     </div>
                     <div class="likes__counter">
-                        Piace a <b id="like-counter-1" class="js-likes-counter">80</b> persone
+                        Piace a
+                        <b id="like-counter-${id}" class="js-likes-counter">
+                            ${likes}
+                        </b>
+                        persone
                     </div>
                 </div> 
             </div>            
         </div>
-        `
+    `
 }
 
+
+posts.forEach ((key) => {
+    const id = key.id
+    const content = key.content
+    const media = key.media
+    const {name, image} = key.author
+    const likes = key.likes
+    const created = key.created
+    
+    postGenerator(id, content, media, name, image, likes, created)
+})
 
 
 
